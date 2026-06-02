@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/effects.css">
+<link rel="stylesheet" href="assets/hero-cine.css">
 </head>
 <body>
 
@@ -50,9 +51,19 @@
   <a href="science.html">Science<span>04</span></a>
 </div>
 
-<!-- HERO (product-forward) -->
-<header class="heroL">
-  <div class="heroL-motif" aria-hidden="true"></div>
+<!-- HERO (cinematic — video backdrop + cycling strip) -->
+<header class="heroL heroL-cine">
+  <!-- Backdrop: 3 frames cross-fade on the 12s SKU cycle -->
+  <div class="hc-bg hc-bg1" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="auto"><source src="assets/hero/hero-1-sungold.mp4" type="video/mp4"></video>
+  </div>
+  <div class="hc-bg hc-bg2" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="auto"><source src="assets/hero/hero-2-yoga.mp4" type="video/mp4"></video>
+  </div>
+  <div class="hc-bg hc-bg3" aria-hidden="true"></div>
+  <div class="hc-tint" aria-hidden="true"></div>
+  <div class="hc-glow" aria-hidden="true"></div>
+
   <div class="heroL-inner">
     <div>
       <span class="eye" data-reveal>Dissolvable supplement strips · Singapore</span>
@@ -62,15 +73,51 @@
       <div class="heroL-rating" data-reveal><span class="stars">★★★★★</span> 4.8 · 2,341 verified reviews</div>
       <div class="heroL-cta" data-reveal>
         <a href="#shop" class="btn btn-solar btn-lg mag">Shop the range →</a>
-        <a href="#how" class="btn btn-lg">How it works →</a>
+        <a href="#how" class="btn btn-light btn-lg">How it works →</a>
       </div>
       <p class="heroL-price" data-reveal>From $24.90 · Subscribe &amp; save 15% · Free SG shipping over $50</p>
     </div>
     <div class="heroL-visual" data-reveal>
-      <div class="heroL-packs">
-        <img src="assets/brand/pack_sleep_30s_front.png" alt="Abso Sleep">
-        <img src="assets/brand/pack_energy_30s_front.png" alt="Abso Energy">
-        <img src="assets/brand/pack_glow_30s_front.png" alt="Abso Glow-Up">
+      <div class="hc-stripwrap">
+        <div class="hc-frame">
+          <!-- SKU labels above the strip -->
+          <div class="hc-labels">
+            <span class="hc-label hc-lbl-energy">[ 01 ] Energy</span>
+            <span class="hc-label hc-lbl-sleep">[ 02 ] Sleep</span>
+            <span class="hc-label hc-lbl-glow">[ 03 ] Glow</span>
+          </div>
+          <!-- Canvas: arch lines + strip -->
+          <div class="hc-canvas">
+            <span class="hc-vline hc-vline-l" aria-hidden="true"></span>
+            <span class="hc-vline hc-vline-r" aria-hidden="true"></span>
+            <span class="hc-hline hc-hline-t" aria-hidden="true"></span>
+            <span class="hc-hline hc-hline-b" aria-hidden="true"></span>
+            <div class="hc-strip">
+              <div class="hc-grad hc-g-energy"></div>
+              <div class="hc-grad hc-g-sleep"></div>
+              <div class="hc-grad hc-g-glow"></div>
+              <div class="hc-wave" aria-hidden="true"></div>
+              <div class="hc-grain" aria-hidden="true"></div>
+            </div>
+          </div>
+          <!-- Floating data tiles, cycle with the SKU -->
+          <div class="hc-tile hc-tile-tl">
+            <div class="hc-key">Active ingredient</div>
+            <div class="hc-vals">
+              <span class="hc-val hc-v-energy">80mg Caffeine</span>
+              <span class="hc-val hc-v-sleep">2mg Melatonin</span>
+              <span class="hc-val hc-v-glow">30mg Silicium</span>
+            </div>
+          </div>
+          <div class="hc-tile hc-tile-br">
+            <div class="hc-key">Best for</div>
+            <div class="hc-vals">
+              <span class="hc-val hc-v-energy">Focus · the grind</span>
+              <span class="hc-val hc-v-sleep">Wind down · rest</span>
+              <span class="hc-val hc-v-glow">Daily glow</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

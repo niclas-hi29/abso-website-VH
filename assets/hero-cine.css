@@ -1,0 +1,329 @@
+/* ============================================================
+   HERO — CINEMATIC
+   Ported from the React Hero (swissarmysteve/abso-website, Hero.tsx v7.1).
+   Video backdrop (sungold -> yoga -> Singapore sunset) cross-fades on the
+   same 12s SKU cycle as the strip gradient (Energy -> Sleep -> Glow).
+   Keeps the vH hero copy (left); replaces the product-pack visual (right)
+   with the cycling gradient strip + floating data tiles + arch lines.
+   All classes/keyframes are hc- namespaced so they don't touch the
+   existing .strip / strip-wave / pulse rules in style.css.
+   ============================================================ */
+
+/* ---------- Section: go dark, layer the backdrop ---------- */
+.heroL-cine {
+  background: var(--ink) !important;   /* base behind the video */
+  color: var(--cream);
+  isolation: isolate;
+}
+.heroL-cine .heroL-motif { display: none; }   /* kill the light decorative blob */
+
+/* Backdrop layers — 3 stacked frames cross-fade on the 12s SKU cycle */
+.hc-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0;
+  will-change: opacity;
+  pointer-events: none;
+}
+.hc-bg video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Sungold video  <-> Energy phase */
+.hc-bg1 { animation: hc-cycle-1 12s ease-in-out infinite; }
+/* Yoga video     <-> Glow phase. Shift left so the strip doesn't cover her. */
+.hc-bg2 { animation: hc-cycle-3 12s ease-in-out infinite; }
+.hc-bg2 video { transform: scale(1.18) translateX(-6%); transform-origin: center; }
+/* Singapore sunrise still (sleep-tinted) <-> Sleep phase, with ken-burns */
+.hc-bg3 {
+  background-image:
+    linear-gradient(180deg, rgba(53,70,160,0.35) 0%, rgba(30,39,112,0.50) 100%),
+    url("hero/hero-3-sunset.png");
+  background-size: cover;
+  background-position: center;
+  animation: hc-ken 18s ease-in-out infinite alternate,
+             hc-cycle-2 12s ease-in-out infinite;
+}
+@keyframes hc-ken {
+  from { transform: scale(1.00) translate(0, 0); }
+  to   { transform: scale(1.08) translate(-1.5%, -1%); }
+}
+
+/* Atmosphere tint — darken so the type reads cleanly (left-weighted) */
+.hc-tint {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+    rgba(31,26,18,0.82) 0%,
+    rgba(31,26,18,0.58) 50%,
+    rgba(31,26,18,0.38) 100%);
+}
+/* Subtle warm radial glow behind the strip — atmosphere only */
+.hc-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(60% 70% at 75% 50%, rgba(223,109,9,0.10) 0%, transparent 70%);
+}
+
+/* Keep the copy + visual above the backdrop */
+.heroL-cine .heroL-inner { position: relative; z-index: 1; }
+
+/* ---------- Left column: recolor copy for dark ground ---------- */
+.heroL-cine .eye          { color: rgba(255,247,233,0.6); }
+.heroL-cine .eye .num     { color: var(--solar); }
+.heroL-cine h1            { color: var(--cream); }
+.heroL-cine .heroL-lead   { color: var(--cream-80); }
+.heroL-cine .heroL-skus   { color: rgba(255,247,233,0.5); }
+.heroL-cine .heroL-rating { color: var(--cream-80); }
+.heroL-cine .heroL-rating .stars { color: var(--solar); }
+.heroL-cine .heroL-price  { color: rgba(255,247,233,0.5); }
+
+/* ---------- Right column: the cycling strip ---------- */
+.heroL-cine .heroL-visual { aspect-ratio: auto; }
+
+.hc-stripwrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+}
+.hc-frame {
+  position: relative;
+  width: 100%;
+  max-width: 290px;
+}
+
+/* SKU labels — sit just above the strip top, right-aligned, cross-fade */
+.hc-labels {
+  position: absolute;
+  right: 16px;
+  bottom: calc(100% + 10px);
+  height: 14px;
+  z-index: 4;
+  pointer-events: none;
+}
+.hc-label {
+  position: absolute;
+  top: 0; right: 0;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0;
+}
+.hc-lbl-energy { animation: hc-cycle-1 12s ease-in-out infinite; }
+.hc-lbl-sleep  { animation: hc-cycle-2 12s ease-in-out infinite; }
+.hc-lbl-glow   { animation: hc-cycle-3 12s ease-in-out infinite; }
+
+/* Canvas wraps strip + flanking architectural lines */
+.hc-canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+}
+
+/* Architectural reference lines — faint, clipped by the hero's overflow:hidden */
+.hc-vline {
+  position: absolute;
+  top: -400px;
+  bottom: -200vh;
+  width: 1px;
+  background: rgba(255,247,233,0.22);
+  pointer-events: none;
+  z-index: 5;
+}
+.hc-vline-l { left: 0; }
+.hc-vline-r { right: 0; }
+.hc-hline {
+  position: absolute;
+  left: -300vw;
+  right: -300vw;
+  height: 1px;
+  background: rgba(255,247,233,0.22);
+  pointer-events: none;
+  z-index: 3;
+}
+.hc-hline-t { top: 0; }
+.hc-hline-b { bottom: 0; }
+
+/* The strip itself */
+.hc-strip {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ink);
+  box-shadow:
+    0 40px 80px -20px rgba(0,0,0,0.65),
+    0 20px 40px -25px rgba(0,0,0,0.45);
+}
+
+/* Each gradient = one full-cover layer; drift bounces on the 16s brand rhythm,
+   opacity rotates between the three SKUs on the 12s cycle. */
+.hc-grad {
+  position: absolute;
+  inset: 0;
+  background-size: 140% 140%;
+  background-position: 80% 20%;
+  opacity: 0;
+  will-change: opacity, background-position;
+}
+.hc-g-energy {
+  background: linear-gradient(180deg,
+    var(--energy-a) 0%, var(--energy-b) 35%, var(--energy-c) 72%, var(--energy-d) 100%);
+  background-size: 140% 140%;
+  animation: hc-drift 16s ease-in-out infinite, hc-cycle-1 12s ease-in-out infinite;
+}
+.hc-g-sleep {
+  background: linear-gradient(180deg,
+    var(--sleep-a) 0%, var(--sleep-b) 32%, var(--sleep-c) 62%, var(--sleep-d) 100%);
+  background-size: 140% 140%;
+  animation: hc-drift 16s ease-in-out infinite, hc-cycle-2 12s ease-in-out infinite;
+}
+.hc-g-glow {
+  background: linear-gradient(180deg,
+    var(--glow-a) 0%, var(--glow-b) 50%, var(--glow-c) 85%, var(--glow-d) 100%);
+  background-size: 140% 140%;
+  animation: hc-drift 16s ease-in-out infinite, hc-cycle-3 12s ease-in-out infinite;
+}
+@keyframes hc-drift {
+  0%, 100% { background-position: 80% 20%; }
+  50%      { background-position: 20% 80%; }
+}
+
+/* Wave — diagonal ridge bands that make the strip "breathe" */
+.hc-wave {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: repeating-linear-gradient(200deg,
+    rgba(255,255,255,0.00) 0px,
+    rgba(255,255,255,0.10) 32px,
+    rgba(0,0,0,0.06) 70px,
+    rgba(255,255,255,0.00) 110px);
+  background-size: 170% 170%;
+  background-position: 80% 20%;
+  animation: hc-wave-move 16s ease-in-out infinite;
+  mix-blend-mode: overlay;
+  opacity: 0.62;
+  pointer-events: none;
+}
+@keyframes hc-wave-move {
+  0%, 100% { background-position: 80% 20%; }
+  50%      { background-position: 20% 80%; }
+}
+
+/* Internal grain — micro texture so the strip doesn't read as CG */
+.hc-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Cycle math: 12s loop, ~3.5s each SKU visible, ~0.5s crossfade */
+@keyframes hc-cycle-1 {
+  0%, 29.17%     { opacity: 1; }
+  33.33%, 95.83% { opacity: 0; }
+  100%           { opacity: 1; }
+}
+@keyframes hc-cycle-2 {
+  0%, 29.17%     { opacity: 0; }
+  33.33%, 62.5%  { opacity: 1; }
+  66.67%, 100%   { opacity: 0; }
+}
+@keyframes hc-cycle-3 {
+  0%, 62.5%      { opacity: 0; }
+  66.67%, 95.83% { opacity: 1; }
+  100%           { opacity: 0; }
+}
+
+/* ---------- Floating data tiles around the strip ---------- */
+.hc-tile {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 130px;
+}
+.hc-tile-tl {
+  top: 12px;
+  right: calc(100% + 28px);
+  text-align: right;
+  align-items: flex-end;
+}
+.hc-tile-br {
+  bottom: 24px;
+  left: calc(100% + 28px);
+  text-align: left;
+}
+.hc-key {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,247,233,0.45);
+}
+.hc-vals { position: relative; height: 18px; width: 100%; }
+.hc-val {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  opacity: 0;
+}
+.hc-tile-tl .hc-val { right: 0; }
+.hc-tile-br .hc-val { left: 0; }
+.hc-v-energy { animation: hc-cycle-1 12s ease-in-out infinite; }
+.hc-v-sleep  { animation: hc-cycle-2 12s ease-in-out infinite; }
+.hc-v-glow   { animation: hc-cycle-3 12s ease-in-out infinite; }
+
+/* Not enough room for tiles on narrower screens */
+@media (max-width: 1100px) {
+  .hc-tile { display: none; }
+}
+
+/* ---------- Mobile: drop the strip, let the video carry ---------- */
+@media (max-width: 860px) {
+  .heroL-cine .heroL-inner { text-align: left; }
+  .heroL-cine .heroL-lead { margin-left: 0; margin-right: 0; }
+  .heroL-cine .heroL-cta,
+  .heroL-cine .heroL-rating { justify-content: flex-start; }
+  .heroL-cine .heroL-visual { display: none; }
+  .heroL-cine { min-height: 86svh; display: flex; align-items: flex-end; }
+}
+
+/* ---------- Reduced motion: freeze on the Energy frame ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .hc-bg, .hc-bg1, .hc-bg2, .hc-bg3,
+  .hc-grad, .hc-g-energy, .hc-g-sleep, .hc-g-glow,
+  .hc-wave, .hc-label, .hc-val { animation: none !important; }
+  .hc-bg1, .hc-g-energy { opacity: 1; }
+  .hc-bg2, .hc-bg3, .hc-g-sleep, .hc-g-glow { opacity: 0; }
+  .hc-lbl-energy, .hc-v-energy { opacity: 1; }
+}
