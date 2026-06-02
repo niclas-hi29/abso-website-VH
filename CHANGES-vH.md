@@ -16,8 +16,16 @@ All new CSS appended to `assets/style.css` under a "vH ADDITIONS" banner. New JS
 
 **Verified:** 0 console errors, 0 server 404s, all new sections render. Compliance scan clean (no banned ingredient copy; fixed an early "no melatonin fog" → "no morning fog" on the Sleep ladder).
 
-## Not done — needs a decision (likely redundant with vG)
+## Alternative homepage — `home-alt.html` (element library, linked in nav as "Alt Home", noindex)
 
-- **vC "range" compare row + strip hover** (Tonight/Tomorrow/In three weeks). vG already ships a strong "Shop the range" card grid in the same slot. Building vC's compare-row on top would duplicate it. Decide: keep vG's cards, or replace them with the vC treatment.
-- **vA "Place. Dissolve. Feel." timeline.** vG's PEEL scroll centrepiece already runs "Tear → Place → Feel", and science.html's mega is "Place. Dissolve. Feel." Adding vA's 5-stage timeline risks a third version of the same beat. Decide before building.
-- **vD scroll animations** (Strip Migration, Three Lives photo portals). Largest, riskiest port; vG already has Lenis + the PEEL scroll moment. Per the spec's open question, confirm these don't compete with PEEL before adding.
+A second homepage that preserves every element we liked, so the old builds can be archived without loss. Built on vH tokens; reachable from the header on the main page.
+
+- **vC cursor-tracked first fold** — mesh gradient that follows the cursor (auto-drifts when idle), the tilted drifting strip floater, and a time-of-day headline ("Tonight is Sleep" / "This afternoon is Energy" / "This evening is Glow-Up") with live clock + recommended-SKU card.
+- **vC "range" compare row + strip hover** — Tonight / Tomorrow / In three weeks, three SKU columns with the canonical strip animating on hover.
+- **vA "Place. Dissolve. Feel." ritual** — auto-advancing 3-stage stepper (0:00 Place → 0:45 Dissolve → 5:00 Feel) with the strip dissolving away to "Felt it. On cue." Driven directly (no MutationObserver).
+- **vD Strip Migration** — pinned scroll section; the strip walks a grid as "Place → Dissolve → Feel" fade in and a Tongue→Mucosa→Blood indicator advances. On a compact `--p` scroll engine (rAF, works alongside Lenis).
+- **vD Three Lives** — per-SKU strip-shaped photo portals that grow to full-bleed on scroll, then name + shop card slide in. **Ingredients corrected to canon** (vD's source had Sleep "Magnesium" and Glow "Marine collagen · Vit C · Zinc" — all wrong; replaced with the real POSG-10001 actives). Photos swapped to vH's working hero images.
+- **vD Absorption bars** — pill/gummy/powder/strip bioavailability bars that fill on scroll into view.
+- Also reuses the Ingredient Atlas + dashboard bento from the main homepage.
+
+Verified: 0 console errors; scroll engine confirmed driving `--p` (migration + portals scrub correctly). The dissolution clock from vD was deliberately left out (its 0:00→5:00 framing implies a 5-minute dissolve, which breaks canon — dissolve is under a minute, five is time-to-felt).
