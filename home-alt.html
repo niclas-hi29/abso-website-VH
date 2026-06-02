@@ -51,12 +51,26 @@
   <a href="home-alt.html"><span class="it">Alt Home</span><span>★</span></a>
 </div>
 
-<!-- ALT HERO -->
-<header class="alt-hero">
-  <div class="wrap" style="padding-bottom:0">
-    <span class="eye" data-reveal>Alternate homepage · element library</span>
-    <h1 class="display" data-reveal style="margin-top:14px">Feel it<br>in <span class="it solar">five.</span></h1>
-    <p class="lead" data-reveal style="margin-top:18px">A second cut of the homepage — the elements we liked from vC and the earlier directions, gathered in one place: the range row, the dissolve ritual, the ingredient atlas and the dashboard.</p>
+<!-- ALT HERO — vC cursor-tracked first fold (mesh follows the cursor; strip floats + drifts) -->
+<header class="vch">
+  <div class="vch-canvas">
+    <div class="vch-mesh"></div>
+    <div class="vch-floater"></div>
+  </div>
+  <div class="vch-meta">
+    <span class="vch-time"><span class="dot"></span> Live · Singapore · <span data-now>00:00</span></span>
+    <h1 class="vch-tod"><span data-tod-label>Tonight</span> is<br><span class="solar"><span data-tod-verb>Sleep</span>.</span></h1>
+    <p class="vch-line">Dissolvable strips. Five minutes from place to felt — the only supplement that arrives at the dose on the box.</p>
+    <a class="vch-rec" href="sleep.html" data-hero-rec>
+      <span class="pack"><img src="assets/brand/pack_sleep_30s_front.png" alt="" data-rec-img></span>
+      <span class="rmeta"><b data-rec-name>Sleep</b><span data-rec-tag>Switch off, on cue.</span></span>
+      <span class="arrow" data-rec-arrow>Tonight's pick · $59.90 →</span>
+    </a>
+    <div class="vch-cta">
+      <a href="#range" class="btn">See the range →</a>
+      <a href="science.html" class="btn">The science →</a>
+    </div>
+    <dl class="vch-stats"><div><dt>Bioavailability</dt><dd>70–90%</dd></div><div><dt>Time to feel</dt><dd>5 min</dd></div><div><dt>Reorder</dt><dd>90%</dd></div></dl>
   </div>
 </header>
 
@@ -256,6 +270,32 @@
       var b=document.querySelector('.range-col [data-add="'+s+'"]');if(b)b.click();});
     bundle.textContent='Added all three →';
   });}
+  // vC-style hero: time-of-day theming + cursor-tracked mesh
+  var TOD=(function(){var h=new Date().getHours();
+    if(h>=5&&h<11)return{tod:'morning',label:'This morning',verb:'Energy',name:'Energy',tag:'Clean lift, no crash.',href:'energy.html',pack:'assets/brand/pack_energy_30s_front.png'};
+    if(h>=11&&h<17)return{tod:'day',label:'This afternoon',verb:'Energy',name:'Energy',tag:'Clean lift, no crash.',href:'energy.html',pack:'assets/brand/pack_energy_30s_front.png'};
+    if(h>=17&&h<21)return{tod:'evening',label:'This evening',verb:'Glow-Up',name:'Glow-Up',tag:'Skin that holds itself.',href:'glow-up.html',pack:'assets/brand/pack_glow_30s_front.png'};
+    return{tod:'night',label:'Tonight',verb:'Sleep',name:'Sleep',tag:'Switch off, on cue.',href:'sleep.html',pack:'assets/brand/pack_sleep_30s_front.png'};
+  })();
+  document.body.classList.add('tod-'+TOD.tod);
+  function setTxt(sel,t){var e=document.querySelector(sel);if(e)e.textContent=t;}
+  setTxt('[data-tod-label]',TOD.label);setTxt('[data-tod-verb]',TOD.verb);
+  setTxt('[data-rec-name]',TOD.name);setTxt('[data-rec-tag]',TOD.tag);
+  setTxt('[data-rec-arrow]',TOD.label+"'s pick · $59.90 →");
+  var rec=document.querySelector('[data-hero-rec]');if(rec)rec.setAttribute('href',TOD.href);
+  var recImg=document.querySelector('[data-rec-img]');if(recImg)recImg.src=TOD.pack;
+  function clock(){var d=new Date(),hh=('0'+d.getHours()).slice(-2),mm=('0'+d.getMinutes()).slice(-2);
+    [].forEach.call(document.querySelectorAll('[data-now]'),function(e){e.textContent=hh+':'+mm;});}
+  clock();setInterval(clock,30000);
+  var cv=document.querySelector('.vch-canvas');
+  if(cv){var last=Date.now();
+    cv.addEventListener('mousemove',function(e){var r=cv.getBoundingClientRect();
+      cv.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+      cv.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');last=Date.now();});
+    var t=0;(function drift(){if(Date.now()-last>1500){t+=0.005;
+      cv.style.setProperty('--mx',(50+Math.sin(t)*30)+'%');
+      cv.style.setProperty('--my',(50+Math.cos(t*0.7)*30)+'%');}
+      requestAnimationFrame(drift);})();}
   var sw=document.querySelector('[data-pdf-stages]');
   if(sw){
     var btns=[].slice.call(sw.querySelectorAll('.pdf-stage')),
