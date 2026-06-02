@@ -1,0 +1,134 @@
+/* ============================================================
+   ABSO · vG — GRID EDITION (Daylight-inspired)
+   Hairline modular grid + fluid traveling gradient strip.
+   Layers on style.css (tokens, fonts, easings).
+   ============================================================ */
+.ged{background:var(--cream);color:var(--ink);overflow-x:hidden}
+.ged ::selection{background:var(--solar);color:var(--cream)}
+
+/* ---------- HAIRLINE GRID FRAME (contained, used only in select sections) ---------- */
+.gridframe{position:absolute;inset:0;z-index:1;pointer-events:none;
+  --gc:rgba(120,108,90,.16);
+  background-image:
+    linear-gradient(90deg,var(--gc) 0 1px,transparent 1px),
+    linear-gradient(90deg,var(--gc) 0 1px,transparent 1px),
+    linear-gradient(90deg,var(--gc) 0 1px,transparent 1px);
+  background-repeat:no-repeat;
+  background-position:25% 0,50% 0,75% 0;
+  background-size:1px 100%;
+  opacity:0;transition:opacity 1.2s var(--e-standard)}
+.ged.lines-in .gridframe{opacity:1}
+.gridframe.on-photo{--gc:rgba(255,255,255,.22)}
+@media(max-width:780px){.gridframe{background-position:50% 0,-1px 0,-1px 0}}
+
+/* ---------- FLUID GRADIENT STRIP ---------- */
+.fstrip{position:relative;overflow:hidden;border-radius:2px;
+  background:linear-gradient(125deg,var(--g1,#CF0513),var(--g2,#DF6D09) 52%,var(--g3,#E1D58E));
+  box-shadow:0 30px 80px -34px rgba(31,26,18,.5)}
+.fstrip::before{content:"";position:absolute;inset:-30%;
+  background:repeating-linear-gradient(125deg,
+     rgba(255,255,255,.12) 0 5%, rgba(255,255,255,0) 5% 9%,
+     rgba(0,0,0,.07) 9% 13%, rgba(0,0,0,0) 13% 22%);
+  mix-blend-mode:soft-light;animation:fstrip-flow 16s linear infinite;will-change:transform}
+.fstrip::after{content:"";position:absolute;inset:0;opacity:.16;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes fstrip-flow{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(10%,7%) rotate(.6deg)}100%{transform:translate(0,0) rotate(0deg)}}
+.fstrip.sku-sleep{--g1:#1E2770;--g2:#3546A0;--g3:#7574C1}
+.fstrip.sku-energy{--g1:#CF0513;--g2:#DF6D09;--g3:#E1D58E}
+.fstrip.sku-glow{--g1:#0A4F4E;--g2:#11A9A8;--g3:#C6DAD0}
+.fstrip.sku-solar{--g1:#B8520A;--g2:#DF6D09;--g3:#F0A95A}
+
+/* the traveling strip (fixed, positioned by JS) */
+.travel{position:fixed;z-index:1;left:0;top:0;width:0;height:0;pointer-events:none;
+  border-radius:2px;will-change:transform,width,height;display:none}
+.ged.travel-on .travel{display:block}
+
+/* invisible target cells */
+.strip-slot{position:relative}
+.strip-slot[data-fill]{/* slots that also show a static strip as fallback/extra */}
+.strip-fallback{position:absolute;inset:0}
+
+/* ---------- ANNOTATIONS (mono data labels) ---------- */
+.anno{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-44);line-height:1.5}
+.anno b{display:block;font-size:13px;color:var(--ink);letter-spacing:.08em;margin-top:3px;font-weight:500}
+.anno.on-photo{color:var(--cream-80)}.anno.on-photo b{color:var(--cream)}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-44)}
+.kicker.light{color:var(--cream-80)}
+
+/* ---------- NAV ---------- */
+.gnav{position:fixed;top:0;left:0;right:0;z-index:60;height:60px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(20px,4vw,52px);mix-blend-mode:normal;transition:background .4s}
+.gnav.solid{background:rgba(255,247,233,.8);backdrop-filter:blur(14px);border-bottom:1px solid var(--ink-08)}
+.gnav img{height:19px}
+.gnav .r{display:flex;gap:22px;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.gnav a{color:var(--ink-64)}.gnav a:hover{color:var(--solar)}
+
+/* ---------- HERO ---------- */
+.ghero{position:relative;min-height:100svh;display:flex;align-items:center;padding:90px clamp(20px,4vw,52px) 60px}
+.ghero-grid{position:relative;z-index:3;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,60px);align-items:center}
+.ghero .kicker{margin-bottom:26px}
+.ghero h1{font-family:var(--serif);font-size:clamp(64px,11vw,184px);line-height:.86;letter-spacing:-.02em}
+.ghero h1 .it{font-style:italic}
+.ghero .sub{margin-top:30px;font-size:clamp(16px,1.5vw,20px);color:var(--ink-64);max-width:40ch;line-height:1.5}
+.ghero .cta{margin-top:30px;display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+.ghero-strip{position:relative;aspect-ratio:4/5;width:100%}
+.ghero-annos{position:absolute;inset:0;z-index:4;pointer-events:none}
+.ghero-annos .anno{position:absolute}
+@media(max-width:880px){.ghero-grid{grid-template-columns:1fr;gap:30px}.ghero-strip{aspect-ratio:3/2}}
+
+/* ---------- SECTION SCAFFOLD ---------- */
+.gsec{position:relative;z-index:3;max-width:1500px;margin:0 auto;padding:clamp(70px,12vh,150px) clamp(20px,4vw,52px)}
+.gsec-head{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:end;margin-bottom:48px}
+.gsec-head h2{font-family:var(--serif);font-size:clamp(40px,6.5vw,92px);line-height:.92;letter-spacing:-.01em}
+.gsec-head .kicker{margin-bottom:18px}
+.gsec-head p{color:var(--ink-64);font-size:clamp(15px,1.4vw,19px);line-height:1.55}
+@media(max-width:780px){.gsec-head{grid-template-columns:1fr;gap:14px}}
+
+/* range row: 3 sku strips in grid */
+.grange{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.5vw,22px)}
+.gcard{display:flex;flex-direction:column}
+.gcard .gcard-strip{position:relative;aspect-ratio:4/5;width:100%;overflow:hidden}
+.gcard .gcard-strip .anno{position:absolute;left:14px;bottom:12px;z-index:2}
+.gcard .gcard-meta{display:flex;align-items:baseline;justify-content:space-between;margin-top:16px;gap:12px}
+.gcard h3{font-family:var(--serif);font-size:30px}
+.gcard .px{font-family:var(--serif);font-size:22px}
+.gcard p{color:var(--ink-64);font-size:14px;line-height:1.5;margin:8px 0 16px}
+.gcard .btn{align-self:flex-start}
+@media(max-width:820px){.grange{grid-template-columns:1fr;gap:18px}}
+
+/* photo + strip overlay (Daylight img1) */
+.gphoto{position:relative;aspect-ratio:21/9;width:100%;overflow:hidden;border-radius:2px}
+.gphoto img,.gphoto video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gphoto .overlay-strip{position:absolute;top:0;right:0;width:33.33%;height:100%;z-index:2}
+.gphoto .anno{position:absolute;z-index:3}
+.gphoto .ph-head{position:absolute;left:clamp(20px,3vw,44px);bottom:clamp(20px,4vh,48px);z-index:3;color:var(--cream)}
+.gphoto .ph-head h2{font-family:var(--serif);font-size:clamp(34px,5vw,72px);line-height:.95;color:var(--cream)}
+@media(max-width:780px){.gphoto{aspect-ratio:4/5}.gphoto .overlay-strip{width:50%;height:42%;top:auto;bottom:0}}
+
+/* big statement */
+.gstate{text-align:center;padding:clamp(80px,16vh,200px) clamp(20px,4vw,52px);position:relative;z-index:3}
+.gstate h2{font-family:var(--serif);font-size:clamp(52px,11vw,168px);line-height:.88;letter-spacing:-.02em}
+.gstate .solar{color:var(--solar)}
+
+/* footer */
+.gfoot{position:relative;z-index:3;background:var(--ink);color:var(--cream);padding:60px clamp(20px,4vw,52px) 40px;margin-top:60px}
+.gfoot .in{max-width:1500px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.gfoot img{height:20px}
+.gfoot .l{display:flex;gap:22px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.gfoot a{color:var(--cream-80)}.gfoot a:hover{color:var(--solar)}
+.gfoot .disc{max-width:1500px;margin:24px auto 0;font-family:var(--mono);font-size:10px;color:var(--cream-55);letter-spacing:.06em}
+
+/* PDP grid hero */
+.gpdp-hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:90px clamp(20px,4vw,52px) 60px}
+.gpdp-grid{position:relative;z-index:3;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,60px);align-items:center}
+.gpdp-strip{position:relative;aspect-ratio:4/5;width:100%;overflow:hidden}
+.gpdp-strip .pack{position:absolute;inset:0;display:grid;place-items:center;padding:14%;z-index:2}
+.gpdp-strip .pack img{width:70%;filter:drop-shadow(0 30px 50px rgba(31,26,18,.4))}
+.gpdp-strip .anno{position:absolute;z-index:3}
+@media(max-width:880px){.gpdp-grid{grid-template-columns:1fr;gap:28px}}
+
+/* reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .fstrip::before{animation:none}
+  .travel{transition:none}
+}

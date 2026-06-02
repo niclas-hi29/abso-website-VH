@@ -1,0 +1,86 @@
+/* ============================================================
+   ABSO · vG — Lookbook ("A Day With Abso")
+   Cinematic, lifestyle-led. Layers on style.css + effects.css.
+   ============================================================ */
+.lb{background:var(--ink);color:var(--cream)}
+.lb ::selection{background:var(--solar);color:var(--cream)}
+
+/* minimal lookbook nav */
+.lb-nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--nav-h);display:flex;align-items:center;
+  justify-content:space-between;padding:0 var(--pad);
+  background:linear-gradient(180deg,rgba(15,12,8,.5),transparent);transition:background .4s}
+.lb-nav.solid{background:rgba(15,12,8,.82);backdrop-filter:blur(14px)}
+.lb-nav img{height:20px}
+.lb-nav .lb-nav-r{display:flex;gap:22px;align-items:center;font-size:13px}
+.lb-nav a{color:var(--cream-80)}.lb-nav a:hover{color:var(--cream)}
+.lb-nav .btn{padding:9px 16px}
+
+/* hero */
+.lb-hero{position:relative;height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;color:var(--cream)}
+.lb-hero video,.lb-hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lb-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,12,8,.45),rgba(15,12,8,.2) 40%,rgba(15,12,8,.75))}
+.lb-hero-in{position:relative;z-index:1;padding:0 var(--pad)}
+.lb-hero .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--cream-80);margin-bottom:24px}
+.lb-hero h1{font-size:clamp(52px,11vw,168px);line-height:.9;color:var(--cream);letter-spacing:-.02em}
+.lb-hero p{max-width:46ch;margin:24px auto 0;color:var(--cream-80);font-size:clamp(16px,1.6vw,21px)}
+
+/* chapter */
+.chap{position:relative;padding:clamp(80px,14vh,180px) 0;--pa:var(--solar)}
+.chap-rise{--pa:#DF6D09}
+.chap-renew{--pa:#11A9A8}
+.chap-rest{--pa:#7574C1}
+.chap-head{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:clamp(36px,6vh,64px)}
+.chap-time{font-family:var(--mono);font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--pa)}
+.chap-head h2{font-size:clamp(44px,8vw,108px);line-height:.92;color:var(--cream);margin-top:18px;letter-spacing:-.01em}
+.chap-head .lead{color:var(--cream-80);font-size:clamp(16px,1.5vw,20px)}
+@media(max-width:780px){.chap-head{grid-template-columns:1fr;gap:16px}}
+
+/* full-bleed cinematic band */
+.lb-band{position:relative;height:clamp(420px,82vh,860px);overflow:hidden;display:grid;place-items:end start}
+.lb-band video,.lb-band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lb-band::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,12,8,.5),transparent 55%),linear-gradient(0deg,rgba(15,12,8,.6),transparent 45%)}
+.lb-band .cap{position:relative;z-index:1;padding:clamp(28px,5vw,64px);max-width:640px}
+.lb-band .cap .q{font-family:var(--serif);font-size:clamp(26px,3.4vw,48px);line-height:1.05;color:var(--cream)}
+.lb-band .cap .m{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-80);margin-top:16px}
+
+/* editorial cluster: asymmetric grid */
+.lb-cluster{max-width:var(--maxw);margin:clamp(24px,5vh,56px) auto 0;padding:0 var(--pad);
+  display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(10px,1.4vw,18px)}
+.lb-cluster figure{position:relative;overflow:hidden;border-radius:10px;margin:0}
+.lb-cluster figure img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--e-expo)}
+.lb-cluster figure:hover img{transform:scale(1.05)}
+.lb-cluster .big{grid-column:span 7;aspect-ratio:4/3}
+.lb-cluster .tall{grid-column:span 5;aspect-ratio:3/4}
+.lb-cluster .wide{grid-column:span 7;aspect-ratio:3/2}
+.lb-cluster .sq{grid-column:span 5;aspect-ratio:1}
+.lb-cluster figcaption{position:absolute;left:14px;bottom:12px;z-index:1;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--cream);text-shadow:0 1px 10px rgba(0,0,0,.6)}
+@media(max-width:780px){.lb-cluster .big,.lb-cluster .tall,.lb-cluster .wide,.lb-cluster .sq{grid-column:span 12}}
+
+/* chapter shop strip */
+.chap-shop{max-width:var(--maxw);margin:clamp(30px,5vh,56px) auto 0;padding:0 var(--pad);
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.chap-shop .ps{display:flex;align-items:center;gap:18px}
+.chap-shop img{width:74px;height:74px;object-fit:contain;filter:drop-shadow(0 14px 26px rgba(0,0,0,.5))}
+.chap-shop .pn{font-family:var(--serif);font-size:30px;color:var(--cream)}
+.chap-shop .pp{font-family:var(--mono);font-size:13px;color:var(--cream-80);margin-top:2px}
+.chap-shop .btn-add{background:var(--pa);border-color:var(--pa);color:var(--cream);border-radius:6px;padding:14px 24px;
+  display:inline-flex;align-items:center;gap:10px;font-weight:500;transition:.3s var(--e-standard)}
+.chap-shop .btn-add:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+
+/* big pull quote interstitial */
+.lb-pull{max-width:1000px;margin:0 auto;padding:clamp(70px,12vh,150px) var(--pad);text-align:center}
+.lb-pull p{font-family:var(--serif);font-size:clamp(30px,5vw,72px);line-height:1.04;color:var(--cream);letter-spacing:-.01em}
+.lb-pull .solar{color:var(--solar)}
+
+/* closing */
+.lb-end{position:relative;height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden}
+.lb-end video,.lb-end img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lb-end::after{content:"";position:absolute;inset:0;background:rgba(15,12,8,.55)}
+.lb-end-in{position:relative;z-index:1;padding:0 var(--pad)}
+.lb-end h2{font-size:clamp(48px,10vw,148px);line-height:.9;color:var(--cream)}
+.lb-end .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+
+/* footer mini */
+.lb-foot{background:var(--ink);color:var(--cream-55);text-align:center;padding:50px var(--pad);border-top:1px solid var(--cream-22);font-size:13px}
+.lb-foot a{color:var(--cream-80)}.lb-foot .mk{display:block;margin-bottom:16px}.lb-foot .mk img{height:20px}

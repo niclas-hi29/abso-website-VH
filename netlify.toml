@@ -1,0 +1,26 @@
+# Abso website — vH. Static multi-page site, no build step.
+# Publish the folder as-is; all asset paths are relative.
+[build]
+  publish = "."
+  command = ""
+
+# Long-cache the fingerprint-free static assets, always revalidate HTML.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Pretty URLs: allow /science as well as /science.html
+[[redirects]]
+  from = "/home-alt"
+  to = "/home-alt.html"
+  status = 200
+[[redirects]]
+  from = "/science"
+  to = "/science.html"
+  status = 200
