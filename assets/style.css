@@ -766,7 +766,7 @@ body.tod-night .vch-floater::before{background:linear-gradient(165deg,var(--slee
 
 /* ---------- ALT-HOME: vD scroll elements (rebuilt on vH tokens, --p scroll engine) ---------- */
 /* Strip Migration — strip walks the grid as you scroll */
-.migration{position:relative;background:var(--cream);height:380vh;isolation:isolate}
+.migration{position:relative;background:var(--cream);height:200vh;isolation:isolate}
 .migration-pin{position:sticky;top:0;height:100vh;overflow:hidden;padding:80px var(--pad)}
 .migration-pin::before{content:"";position:absolute;inset:80px var(--pad);background-image:linear-gradient(to right,rgba(31,26,18,.045) 1px,transparent 1px);background-size:calc(100% / 12) 100%;pointer-events:none}
 .mig-strip{position:absolute;width:clamp(120px,18vw,240px);aspect-ratio:4/5;--start-x:8%;--start-y:60%;--end-x:78%;--end-y:18%;left:calc(var(--start-x) + (var(--end-x) - var(--start-x)) * var(--p,0));top:calc(var(--start-y) + (var(--end-y) - var(--start-y)) * var(--p,0));transform:rotate(calc(-6deg + 12deg * var(--p,0)));animation:none;z-index:5;filter:drop-shadow(0 24px 40px rgba(15,15,15,.18))}
@@ -783,11 +783,11 @@ body.tod-night .vch-floater::before{background:linear-gradient(165deg,var(--slee
 .mig-step i{width:18px;height:1px;background:var(--ink-22);transition:all .35s}
 .mig-step.on{color:var(--ink-pure)}
 .mig-step.on i{background:var(--solar);width:36px;height:2px}
-@media(max-width:980px){.migration{height:320vh}.mig-strip{width:120px}.mig-word{font-size:clamp(48px,14vw,80px)}.mig-w2{top:38%;left:6%}.mig-w3{top:58%;left:6%}.mig-steps{display:none}}
+@media(max-width:980px){.migration{height:200vh}.mig-strip{width:120px}.mig-word{font-size:clamp(48px,14vw,80px)}.mig-w2{top:38%;left:6%}.mig-w3{top:58%;left:6%}.mig-steps{display:none}}
 
 /* Three Lives — per-SKU strip-shaped photo reveal */
 .lives{position:relative}
-.life{position:relative;height:250vh;background:var(--cream)}
+.life{position:relative;height:165vh;background:var(--cream)}
 .life.dark{background:var(--ink-pure);color:var(--cream)}
 .life-pin{position:sticky;top:0;height:100vh;overflow:hidden;isolation:isolate;background:inherit}
 .life-portal{position:absolute;inset:0;display:grid;place-items:center;z-index:1}
@@ -809,7 +809,7 @@ body.tod-night .vch-floater::before{background:linear-gradient(165deg,var(--slee
 .life-shop .add:hover{background:transparent;color:var(--solar)}
 .life-shop .open{display:inline-flex;justify-content:center;border:1px solid var(--ink-pure);color:var(--ink-pure);padding:13px 18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;border-radius:6px}
 .life-shop .open:hover{background:var(--ink-pure);color:var(--cream)}
-@media(max-width:980px){.life{height:200vh}.life-content{padding:calc(var(--nav-h) + 20px) 20px 40px}.life-name{grid-column:1 / -1}.life-shop{grid-column:1 / -1;max-width:100%;margin-left:0}}
+@media(max-width:980px){.life{height:150vh}.life-content{padding:calc(var(--nav-h) + 20px) 20px 40px}.life-name{grid-column:1 / -1}.life-shop{grid-column:1 / -1;max-width:100%;margin-left:0}}
 
 /* Absorption bars — format vs dose absorbed (fill on scroll into view) */
 .abars{background:var(--cream-warm)}
